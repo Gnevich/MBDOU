@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Занятие{% endblock title %}
+{% block content %}
+    <button form="edit_form" type="submit" class="btn btn-secondary me-5" onClick="window.history.back();return false;">Назад</button>
+    <h4>Занятие "{{ LessonInfo.Theme }}"</h4>
+    <div class="container text-start">
+        <p><span class="fw-bolder">Дата: </span>{{ LessonInfo.Date }}</p>
+        <p><span class="fw-bolder">Тема: </span>{{ LessonInfo.Theme }}</p>
+        <p><span class="fw-bolder">Задачи: </span>{{ LessonInfo.Task }}</p>
+        <p><span class="fw-bolder">Организация предметно – пространственной развивающей среды: </span>{{ LessonInfo.Material }}</p>
+        <p><span class="fw-bolder">Используемая литература: </span>{{ LessonInfo.Literature }}</p>
+        <p><span class="fw-bolder">Виды деятельности и культурные практики: </span>{{ LessonInfo.Activities }}</p>
+    </div>
+
+{% endblock content %}

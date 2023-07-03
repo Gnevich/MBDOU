@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Список групп{% endblock title %}
+{% block content %}
+
+    <a href="{% url "users-profile" %}" class="btn btn-secondary btn-md active">Назад</a>
+    <h3 class="mt-3">Список групп</h3>
+
+    <div class="container">
+        <table class="table">
+        <tr>
+            <th scope="col">Название группы</th>
+            <th scope="col">Воспитатели</th>
+            <th scope="col">Просмотр</th>
+        </tr>
+        {% for i in list_group %}
+                <tr>
+                    <td>{{i.GroupAge.Name}} {{i.Name}} </td>
+                    <td>{{i.Mentor}}<br>{{i.SecondMentor}}</td>
+                    <td><a href="{% url 'group-survey' pk=i.id %}">Просмотр</a></td>
+                </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock title %}
+{% block content %}
+      <div class="modal-body">
+        <form method="post" id="edit_form">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <p>{{ form.Date.label_tag }} {{ form.Date  }}</p>
+                <p>{{ form.Theme.label_tag }}{{ form.Theme  }}</p>
+                <p>{{ form.Task.label_tag }}{{ form.Task  }}</p>
+                <p>{{ form.Material.label_tag }}{{ form.Material  }}</p>
+                <p>{{ form.Literature.label_tag }} {{ form.Literature }}</p>
+                <p>{{ form.Activities.label_tag }}{{ form.Activities }}</p>
+                {% if access == True %}
+                    <p>{{ form.Score.label_tag }}{{ form.Score }}</p>
+                {% endif %}
+            </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer mt-4">
+        <button form="edit_form" type="submit" class="btn btn-secondary me-5" onClick="window.history.back();return false;">Назад</button>
+        <button form="edit_form" type="submit" class="btn btn-primary">Обновить</button>
+      </div>
+
+{% endblock content %}

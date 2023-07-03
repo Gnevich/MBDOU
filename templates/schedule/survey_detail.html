@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Расписание{% endblock title %}
+{% block content %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Добавить результат
+    </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">
+      Добавить критерий
+    </button>
+    <button form="edit_form" type="submit" class="btn btn-secondary me-5" onClick="window.history.back();return false;">Назад</button>
+
+    <h4 class="text-center mt-4">Педагогическая диагностика {{SurveyInfo}}</h4>
+    <h4 class="text-center">Группа "{{ SurveyInfo.Group }}"</h4>
+
+    {% regroup ChildrenResultList by Children as ChildrenResultList %}
+    <div class="container">
+    <table class="table mb-0 table-bordered">
+        <tr class="">
+            <th class="col-2">ФИО ребенка</th>
+            {% for Survey in SurveyScope %}
+                <th class="">{{ Survey }}</th>
+            {% endfor %}
+            <th class="col-1">Средний балл</th>
+        </tr>
+        {% for i in ChildrenResultList %}
+            <tr class="">
+                <td class="col-2">{{i.grouper}}</td>
+                {% for j in i.list %}
+                    <td class="">{{j.Result}}</td>
+                {% endfor %}
+
+                {% for avg1 in childAvg %}
+                    {% if avg1.Children == i.grouper.id %}
+                        <td class="col-1">{{avg1.avg}}</td>
+                    {% endif %}
+                {% endfor %}
+
+            </tr>
+        {% endfor %}
+        <tr class="">
+                <td class="col-2">Среднее:</td>
+                {% for avg in avg %}
+                    <td class="col-1">{{avg.avg}}</td>
+                {% endfor %}
+
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Добавить результат</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" id="add_form" name="add_form">
+                {% csrf_token %}
+                {{ form }}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" name="add_form">Закрыть</button>
+            <button form="add_form" type="submit" class="btn btn-primary" name="add_form">Добавить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Modal1 -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Добавить результат</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" id="add_form1" name="add_form1">
+                {% csrf_token %}
+                {{ Scopeform }}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" name="add_form1">Закрыть</button>
+            <button form="add_form1" type="submit" class="btn btn-primary" name="add_form1">Добавить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

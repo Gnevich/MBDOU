@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock title %}
+{% block content %}
+    <button form="edit_form" type="submit" class="btn btn-secondary me-5" onClick="window.history.back();return false;">Назад</button>
+    <h4>Информация о "{{ children }}"</h4>
+    <div class="container text-start">
+        <p><span class="fw-bolder">ФИО: </span>{{ children }}</p>
+        <p><span class="fw-bolder">Дата рождения: </span>{{ children.BornDate }}</p>
+        <p><span class="fw-bolder">Группа: </span>{{ children.Group }}</p>
+        <p><span class="fw-bolder">Информация: </span>{{ children.Info }}</p>
+    </div>
+{% endblock content %}

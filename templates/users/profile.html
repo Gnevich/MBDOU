@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Профиль {{user.profile.LastName}} {{user.profile.FirstName}} {{user.profile.MiddleName}}{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group ">
+                <li class="list-group-item list-group-item list-group-item-dark">Профиль</li>
+                <li class="list-group-item">Фамилия: {{user.profile.LastName}}</li>
+                <li class="list-group-item">Имя: {{user.profile.FirstName}}</li>
+                <li class="list-group-item">Отчество: {{user.profile.MiddleName}}</li>
+                <li class="list-group-item">Дата рождения: {{user.profile.BornDate}}</li>
+                <li class="list-group-item">Должность: {{  user.groups.all.0 }}</li>
+            </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-4 mb-2 mb-lg-0 ">
+            <div class="card  text-white text-center mb-4">
+                <a href="{% url 'group' %}" style="text-decoration: none; color: #212529;">
+                    <div class="card card-body">
+                        <h5 class="card-title">Группы</h5>
+                        <img src="https://cdn-icons-png.flaticon.com/512/10365/10365633.png">
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-2 mb-lg-0 ">
+            <div class="card  text-white text-center mb-4">
+                <a href="{% url 'group-schedule' %}" style="text-decoration: none; color: #212529;">
+                    <div class="card card-body">
+                        <h5 class="card-title">Учебный план</h5>
+                        <img src="https://cdn-icons-png.flaticon.com/512/1171/1171977.png">
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% if topaccess %}
+        <div class="col-lg-2 col-md-4 mb-2 mb-lg-0 ">
+            <div class="card  text-white text-center mb-4">
+                <a href="{% url 'users' %}" style="text-decoration: none; color: #212529;">
+                    <div class="card card-body">
+                        <h5 class="card-title">Пользователи</h5>
+                        <img src="https://cdn-icons-png.flaticon.com/512/4803/4803050.png">
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-lg-2 col-md-4 mb-2 mb-lg-0 ">
+            <div class="card  text-white text-center mb-4">
+                <a href="{% url 'survey' %}" style="text-decoration: none; color: #212529;">
+                    <div class="card card-body">
+                        <h5 class="card-title">Пед. диагностика</h5>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2112/2112502.png">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

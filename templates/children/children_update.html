@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock title %}
+{% block content %}
+      <div class="modal-body">
+        <form method="post" id="edit_form">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+      </div>
+      <div class="modal-footer mt-4">
+        <button form="edit_form" type="submit" class="btn btn-secondary me-5" onClick="window.history.back();return false;">Назад</button>
+        <button form="edit_form" type="submit" class="btn btn-primary" >Обновить</button>
+      </div>
+
+{% endblock content %}

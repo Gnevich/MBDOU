@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Учебный план{% endblock title %}
+{% block content %}
+    <!-- Button trigger modal -->
+    <a href="{% url "users-profile" %}" class="btn btn-secondary btn-md active">Назад</a>
+    <h4 class="text-center mt-4">Учебный план</h4>
+    <div class="container row">
+        {% for i in group_list %}
+                <div class="col-lg-2 col-md-4 mb-2 mb-lg-0 ">
+                    <div class="card  text-white text-center mb-4">
+                        <a href="{% url 'group-schedule-detail' pk=i.id %}" style="text-decoration: none; color: #212529;">
+                            <div class="card card-body">
+                                <h5 class="card-title">{{ i }}</h5>
+                                <img src="https://cdn-icons-png.flaticon.com/512/10365/10365633.png">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

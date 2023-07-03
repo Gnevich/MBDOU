@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Профиль {{UserInfo.profile.LastName}} {{UserInfo.profile.FirstName}} {{UserInfo.profile.MiddleName}}{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group ">
+                <li class="list-group-item list-group-item list-group-item-dark">Профиль</li>
+                <li class="list-group-item">Фамилия: {{UserInfo.profile.LastName}}</li>
+                <li class="list-group-item">Имя: {{UserInfo.profile.FirstName}}</li>
+                <li class="list-group-item">Отчество: {{UserInfo.profile.MiddleName}}</li>
+                <li class="list-group-item">Дата рождения: {{UserInfo.profile.BornDate}}</li>
+                <li class="list-group-item">Должность: {{  UserInfo.groups.all.0 }}</li>
+            </ul>
+        </div>
+    </div>
+{% endblock content %}

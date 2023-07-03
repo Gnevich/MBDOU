@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}Учебный план{% endblock title %}
+{% block content %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Добавить занятие
+    </button>
+
+    <a href="{% url "group-schedule" %}" class="btn btn-secondary btn-md active">Назад</a>
+    <a href="{% url "group-schedule-docx" pk=group.id %}" class="btn btn-md active">Скачать</a>
+
+
+    <h4 class="text-center mt-4">Перспективно-тематическое планирование образовательной деятельности</h4>
+    <h4 class="text-center mt-4">Группа "{{group.GroupAge.Name}} {{group.Name}}"</h4>
+    <h4 class="text-center ">Воспитатели: "{{ group.Mentor }}", "{{ group.SecondMentor }}"</h4>
+<div class="container mb-4 mt-4">
+
+    <div class="form-group col-md-3 mx-auto border">
+        <p class="text-center">Фильтры</p>
+        <form method="get" id="month" >
+            <label class="mb-2" for="month">Месяц: </label>
+            <select class="ml-3" id="month" class="form-control" name="month">
+                <option value="1">Январь</option>
+                <option value="2">Февраль</option>
+                <option value="3">Март</option>
+                <option value="4">Апрель</option>
+                <option value="5">Май</option>
+                <option value="6">Июнь</option>
+                <option value="7">Июль</option>
+                <option value="8">Август</option>
+                <option value="9">Сентябрь</option>
+                <option value="10">Октябрь</option>
+                <option value="11">Ноябрь</option>
+                <option value="12">Декабрь</option>
+            </select>
+            <br>
+            <button  type="submit" class="btn btn-primary">Найти</button>
+        </form>
+    </div>
+</div>
+    {% regroup list_lesson by Date as list_lesson %}
+    <div class="container">
+    <table class="table mb-0 table-bordered">
+    {% for i in list_lesson %}
+        <thead>
+        <tr class="d-flex">
+            <th colspan="5" class="col-12 table-secondary">{{i.grouper}}</th>
+        </tr>
+        <tr class="d-flex">
+            <th class="col-2">Дата</th>
+            <th class="col-2">Тема</th>
+            <th class="col-3">Виды деятельности и культурные практики</th>
+            <th class="col-1">Оценка</th>
+            <th class="col-4">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for Lesson in i.list %}
+            <tr class="d-flex">
+                <td class="col-2">{{Lesson.Date}}</td>
+                <td class="col-2">{{Lesson.Theme}}</td>
+                <td class="col-3">{{Lesson.Activities}}</td>
+                <td class="col-1"><b>{{Lesson.Score}}</b></td>
+                <td class="col-4">
+                    <a class="btn btn-primary" href="{% url "lesson-detail" pk=Lesson.id %}">Просмотр</a>
+                    <a class="btn btn-secondary" href="{% url "lesson-update" pk=Lesson.id %}">Редактировать</a>
+                    <a class="btn btn-danger" href="{% url "lesson-delete" pk=Lesson.id %}">Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    {% endfor %}
+    </table>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Добавить занятие</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" id="add_form" name="add_form">
+                {% csrf_token %}
+                <p>{{ form.Date.label_tag }} {{ form.Date  }}</p>
+                <p>{{ form.Theme.label_tag }}{{ form.Theme  }}</p>
+                <p>{{ form.Task.label_tag }}{{ form.Task  }}</p>
+                <p>{{ form.Material.label_tag }}{{ form.Material  }}</p>
+                <p>{{ form.Literature.label_tag }} {{ form.Literature }}</p>
+                <p>{{ form.Activities.label_tag }}{{ form.Activities }}</p>
+                {% if access == True %}
+                    <p>{{ form.Score.label_tag }}{{ form.Score }}</p>
+                {% endif %}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" name="add_form">Закрыть</button>
+            <button form="add_form" type="submit" class="btn btn-primary" name="add_form">Добавить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

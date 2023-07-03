@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}{{ group.Name }} группа{% endblock title %}
+{% block content %}
+    <!-- Button trigger modal -->
+    {% if topaccess == True %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Добавить ребенка
+        </button>
+    {% endif %}
+    <a href="{% url "group" %}" class="btn btn-secondary btn-md active">Назад</a>
+    <h4 class="text-center">Список детей группы "{{group.GroupAge.Name}} {{group.Name}}"</h4>
+    <div class="container">
+        <table class="table">
+        <tr>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Дата рождения</th>
+            {% if topaccess == True %}
+                <th scope="col">Действия</th>
+            {% endif %}
+        </tr>
+        {% for i in list_children %}
+            {% if i.Group.Name == group.Name %}
+                <tr>
+                    <td>{{i.LastName}}</td>
+                    <td>{{i.FirstName}}</td>
+                    <td>{{i.MiddleName}}</td>
+                    <td>{{i.BornDate}}</td>
+                    <td><a class="btn btn-primary " href="{% url 'children-detail' pk=i.id %}">Просмотр</a>
+                    <a class="btn btn-secondary " href="{% url 'children-download' pk=i.id %}">Скачать</a>
+                    {% if topaccess == True %}
+                        <a class="btn btn-secondary " href="{% url "children-update" pk=i.id %}">Редактировать</a>
+                        <a class="btn btn-danger " href="{% url "children-delete" pk=i.id %}">Удалить</a>
+                    {% endif %}
+                </tr>
+
+            {% endif %}
+        {% endfor %}
+        </table>
+    </div>
+
+    <!-- Modal add_form -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить ребенка</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="add_form">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button form="add_form" type="submit" class="btn btn-primary">Добавить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
